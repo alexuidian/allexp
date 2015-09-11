@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [[ ! $1 ]];then
+	echo "Give stats_G file"
+	exit -1
+fi
+
+
+file=`echo $1 | sed 's/tmem/G/'`
+
+if [[ ! -f $file ]];then
+	echo 0
+	exit -1
+
+fi
+
+comp=`cat $file  | tr -s " " | tail -n 1 | cut -d" " -f36`
+
+if [[ $comp == 100.0 ]];then
+	echo 0.0
+else
+	python -c "print abs($comp)"
+fi
+
+
+
+

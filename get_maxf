@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ ! $1 ]];then
+	echo "Give stats_G file"
+	exit -1
+fi
+
+if [[ ! -f `echo $1 | sed 's/tmem/G/'` ]];then
+	echo 0
+	exit -1
+
+fi
+
+cat `echo $1 | sed 's/tmem/G/'` | tr -s " " | tail -n 1 | cut -d" " -f16
+
+
+

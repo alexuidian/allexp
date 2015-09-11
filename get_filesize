@@ -1,0 +1,4 @@
+echo " `cat $1 | grep filesize | cut -d" " -f2 | head -n 1` * 0.000001 " | bc | cut -c1-6
+
+#cat $1 | grep "Fileset bigfileset:" | tr -s " "  | tr -s " " | tr -s " " | sed 's/.* \([.0-9]*\)MB/\1/'
+

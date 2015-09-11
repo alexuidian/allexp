@@ -1,0 +1,271 @@
+#! /usr/bin/python
+
+import sys,os,re,commands
+
+
+def collect(lists):
+	for each in lists:
+		all_f=sorted(os.listdir(each))
+		all_ff=sorted(map(lambda x: os.path.abspath(os.path.join(each,x)), all_f))
+		all_perf=[]
+		all_cycles=[]
+		all_compfacter=[]
+		all_dedupfacter=[]
+		all_gets=[]
+		all_tze=[]
+		all_maxt=[]
+		all_maxf=[]
+		all_maxc=[]
+		all_aget=[]
+		all_aput=[]
+		all_acomp=[]
+		all_adecomp=[]
+		all_acompc=[]
+		all_adecompc=[]
+		filesize=0
+		setup=-1
+		filesizez=[]
+		for  y in all_ff:
+			setup=-1
+			filesize+=1
+			(status,output)=commands.getstatusoutput('./get_filesize '+y+'/0.setup/bench.out*')
+			filesizez.append(output)
+			all_setup=sorted(os.listdir(y))
+			all_setupf=sorted(map(lambda x: os.path.abspath(os.path.join(y,x)), all_setup))
+			perf=[]
+			cycles=[]
+			compfacter=[]
+			dedupfacter=[]
+			gets=[]
+			tze=[]
+			maxt=[]
+			maxf=[]
+			maxc=[]
+			acomp=[]
+			adecomp=[]
+			acompc=[]
+			adecompc=[]
+			aget=[]
+			aput=[]
+			
+			for z in all_setupf:
+				setup+=1
+				(status,output)=commands.getstatusoutput('./get_perf '+z+'/bench*')
+				perf.append(output)
+				(status,output)=commands.getstatusoutput('./get_cycles '+z+'/stats_tmem')
+				cycles.append(output)
+				(status,output)=commands.getstatusoutput('./get_compfacter '+z+'/stats_tmem')
+				compfacter.append(output)
+				(status,output)=commands.getstatusoutput('./get_dedupfacter '+z+'/stats_tmem')
+				dedupfacter.append(output)
+				(status,output)=commands.getstatusoutput('./get_gets '+z+'/stats_tmem')
+				gets.append(output)
+				(status,output)=commands.getstatusoutput('./get_tzefacter '+z+'/stats_tmem')
+				tze.append(output)
+				(status,output)=commands.getstatusoutput('./get_maxtmemsize '+z+'/stats_tmem')
+				maxt.append(output)
+				(status,output)=commands.getstatusoutput('./get_maxf '+z+'/stats_tmem')
+				maxf.append(output)
+				(status,output)=commands.getstatusoutput('./get_maxc '+z+'/stats_tmem')
+				maxc.append(output)
+
+				(status,output)=commands.getstatusoutput('./get_aget '+z+'/stats_tmem')
+				aget.append(output)
+				(status,output)=commands.getstatusoutput('./get_aput '+z+'/stats_tmem')
+				aput.append(output)
+				(status,output)=commands.getstatusoutput('./get_acomp '+z+'/stats_tmem')
+				acomp.append(output)
+				(status,output)=commands.getstatusoutput('./get_adecomp '+z+'/stats_tmem')
+				adecomp.append(output)
+				(status,output)=commands.getstatusoutput('./get_acompc '+z+'/stats_tmem')
+				acompc.append(output)
+				(status,output)=commands.getstatusoutput('./get_adecompc '+z+'/stats_tmem')
+				adecompc.append(output)
+				
+				(status,output)=commands.getstatusoutput('ls '+z+'/stats_list_*')
+				output=sorted(output.split())
+				for files in output:
+					file1=os.path.basename(files)
+					op=re.search(r'stats_list_(.*)',file1)
+					if(op):
+						op=op.group(1)
+					else:
+						op="None"
+					file2=file1+str(setup)+str(filesize)
+					(status,output1)=commands.getstatusoutput('./parse_stats '+z+'/'+file1+' > '+file2)
+					if(len(open(file2).readlines()) <3 ):
+						(status,output1)=commands.getstatusoutput('rm '+file2)		
+					##else:
+						##commandplot='./plot.sh '+file2+' '+file2+'.eps '+op+str(setup)+str(filesize)
+						##(status,output1)=commands.getstatusoutput(commandplot)
+					#print status,setup,filesize
+						##if(status > 0):
+						##	(status,output1)=commands.getstatusoutput('del '+file2+'.eps')
+					
+					
+					#(status,output1)=commands.getstatusoutput('rm '+file2)
+
+						
+					
+				
+				
+				
+				
+				
+					
+			all_perf.append(perf)
+			all_cycles.append(cycles)
+			all_compfacter.append(compfacter)
+			all_dedupfacter.append(dedupfacter)
+			all_gets.append(gets)
+			all_tze.append(tze)
+			all_maxt.append(maxt)
+			all_maxf.append(maxf)
+			all_maxc.append(maxc)
+			all_aget.append(aget)
+			all_aput.append(aput)
+			all_acomp.append(acomp)
+			all_adecomp.append(adecomp)
+			all_acompc.append(acompc)
+			all_adecompc.append(adecompc)
+			
+
+		
+				
+
+			
+		for i in range(0,len(all_perf)):
+			for j in range(0,len(all_perf[1])):
+				print all_perf[i][j],
+				
+		#all_perf=zip(*all_perf)
+		#all_cycles=zip(*all_cycles)
+		#all_compfacter=zip(*all_compfacter)
+		#all_dedupfacter=zip(*all_dedupfacter)
+		#all_gets=zip(*all_gets)
+		#all_tze=zip(*all_tze)
+		
+		f1=open("stats_perf",'w')
+		f2=open("stats_cycle",'w')
+		f3=open("stats_dedup",'w')
+		f4=open("stats_gets",'w')
+		f5=open("stats_tze",'w')
+		f6=open("stats_comp",'w')
+		f7=open("filesizez",'w')
+		f8=open("stats_maxt",'w')
+		f9=open("stats_maxf",'w')
+		f10=open("stats_maxc",'w')
+
+		f11=open("stats_aget",'w')
+		f12=open("stats_aput",'w')
+		f13=open("stats_acomp",'w')
+		f14=open("stats_adecomp",'w')
+		f15=open("stats_acompc",'w')
+		f16=open("stats_adecompc",'w')
+	
+		for i in range(0,len(all_perf)):
+			for j in range(0,len(all_perf[1])):
+				f1.write(all_perf[i][j]+' ')
+				f2.write(all_cycles[i][j]+' ')
+				f3.write(all_dedupfacter[i][j]+' ')
+				f4.write(all_gets[i][j]+' ')
+				f5.write(all_tze[i][j]+' ')
+				f8.write(all_maxt[i][j]+' ')
+				f9.write(all_maxf[i][j]+' ')
+				f10.write(all_maxc[i][j]+' ')
+				f11.write(all_aget[i][j]+' ')
+				f12.write(all_aput[i][j]+' ')
+				f13.write(all_acomp[i][j]+' ')
+				f14.write(all_adecomp[i][j]+' ')
+				f15.write(all_acompc[i][j]+' ')
+				f16.write(all_adecompc[i][j]+' ')
+			
+				f6.write(all_compfacter[i][j]+' ')
+			f1.write('\n')
+			f2.write('\n')
+			f3.write('\n')
+			f4.write('\n')
+			f5.write('\n')
+			f6.write('\n')
+			f8.write('\n')
+			f9.write('\n')
+			f10.write('\n')
+			f11.write('\n')
+			f12.write('\n')
+			f13.write('\n')
+			f14.write('\n')
+			f15.write('\n')
+			f16.write('\n')
+			
+			f7.write(filesizez[i]+'\n')
+			
+		f1.close()
+		f2.close()
+		f3.close()
+		f4.close()
+		f5.close()
+		f6.close()
+		f7.close()
+		f8.close()
+		f9.close()
+		f10.close()
+		f11.close()
+		f12.close()
+		f13.close()
+		f14.close()
+		f15.close()
+		f16.close()
+			
+			
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_perf > stats_perf1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_cycle > stats_cycle1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_dedup > stats_dedup1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_gets > stats_gets1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_tze > stats_tze1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_comp > stats_comp1')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_maxt > stats_maxt1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_maxf > stats_maxf1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_maxc > stats_maxc1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_aget > stats_aget1  ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_aput > stats_aput1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_acomp > stats_acomp1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adecomp > stats_adecomp1  ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_acompc > stats_acompc1  ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adecompc > stats_adecompc1 ')
+		
+		l=['stats_perf1','stats_cycle1','stats_dedup1','stats_gets1','stats_tze1','stats_comp1','stats_maxt1','stats_aget1','stats_aput1','stats_acomp1','stats_adecomp1','stats_acompc1','stats_adecompc1']
+		for li in l:
+			commandplot='./plot2.sh  '+li+' '+li+'.eps  '	
+			#commandplot='./plot2.sh  '+li+' '+li+'.eps && rm '+li	
+			(status,output1)=commands.getstatusoutput(commandplot)
+			
+	
+		#print all_perf,all_cycles,all_compfacter,all_dedupfacter,all_gets,all_tze
+		
+				
+		
+
+		
+	
+
+
+
+
+def main():
+	if(len(sys.argv) < 2):
+		print "Please Give a file"
+		return
+	 
+
+	collect(sys.argv[1:])	
+
+
+
+
+main()
+
+
+
+
+
+

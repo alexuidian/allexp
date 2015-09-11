@@ -1,0 +1,57 @@
+#!/usr/bin/python
+
+import sys,re
+
+def parse_cycles(lines):
+	ephgets=[]
+	for each in lines:
+		each=each.rstrip('\n')
+		m=re.search(r'(Ge:)([0-9]+)',each)
+		if(m):
+			ephgets.append(int(m.group(2)))
+	print (sum(ephgets))
+
+def main():
+	if(len(sys.argv)<2):
+		print "Please give a Filename"
+		sys.exit(-1)
+	lines=[]
+	for each in sys.argv[1:]:
+		f=open(each)
+		lines=lines + f.readlines()
+	parse_cycles(lines)
+	
+
+
+
+main()
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/bash
+#if [[ $1 ]];then
+#
+#
+#
+#if [[ -f $1 ]];then
+#
+#cat $1 | grep Tc | cut -d"," -f6
+#
+#
+#
+#fi
+#
+#else
+#echo "GET_CYCLES: Please give a file stats_tmem"
+#fi
+
+

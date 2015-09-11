@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [[ ! $1 ]];then
+	echo "Give stats_G file"
+	exit -1
+fi
+
+if [[ ! -f `echo $1 | sed 's/tmem/T/'` ]];then
+	echo 0
+	exit -1
+
+fi
+
+file=`echo $1 | sed 's/tmem/T/'`
+up=`cat $file | tr -s " " | tail -n 1 | cut -d" " -f4`
+down=`cat $file | tr -s " " | tail -n 1 | cut -d" " -f10`
+
+if [[ !  $down ]];then
+        echo 0
+else
+        echo $up / $down | bc
+fi
+
+
+
+
+#echo `cat $file | tr -s " " | tail -n 1 | cut -d" " -f4` / `cat $file | tr -s " " | tail -n 1 | cut -d" " -f10` | bc
+
+
+
+
+

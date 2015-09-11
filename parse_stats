@@ -1,0 +1,87 @@
+#! /usr/bin/python
+
+import sys
+
+force=1
+rangess=1500
+
+def findranges(lines,max1):
+	i=len(lines)-1
+	count=0
+	max=0
+	while( i > 1):
+		lines[i]=lines[i].rstrip('\n')
+		lines[i]=lines[i].rstrip()
+		if(not len(lines[i])):
+			i-=1
+			continue
+		curr=int(lines[i],16)
+		if(max < curr):
+			max=curr
+		count+=curr
+		if(count>(float(max1*0.7))):
+		#if(count>(500)):
+			break
+		i-=1
+	#	print i
+	global force
+	global rangess
+	if (force ==1):
+		return rangess
+	return i-1
+
+def main():
+	if(len(sys.argv) < 2):
+		print "Give me any stats_list_* file name"
+		sys.exit(0)
+
+	filename=sys.argv[1]
+	f=open(filename)
+	lines=f.readlines()
+	lines=lines[1:100001]
+	max1=max(map(lambda word: int(word.rstrip('\n'),16), lines))
+	sum1=sum(map(lambda word: int(word.rstrip('\n'),16), lines))
+#	print max1
+	ranges=findranges(lines,max1)
+	count=0
+	above=0
+	countz=0
+	rangez=200
+	zlist=[]
+	oldv=0
+	for each in lines:
+		each=each.rstrip('\n')
+		each=each.rstrip()
+		if(not len(each)):
+			continue
+		if((len(each)) and each[0]=='#'):
+			continue
+		else:
+			each=int(each,16)
+			if(count <= ranges):
+				if( each == 0):
+					countz+=1
+				else:
+					countz=0
+				if( countz < rangez ):
+					if(sum1 == 0):
+						each1=0
+					else:
+						each1=float((float(each*10000))/float(sum1))
+						each1=each1+oldv
+						oldv=each1
+					print str(count)+" "+str(each1)
+				count+=1
+			else:
+				above+=(each)
+
+	if(sum1 == 0):
+		above1=0
+	else:
+		above1=float(float(above*10000)/float(sum1))
+		above1+=oldv
+		oldv=above1
+	print str(ranges+1)+" "+str(above1)	
+
+
+main()
