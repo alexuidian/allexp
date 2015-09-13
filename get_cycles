@@ -4,12 +4,32 @@ import sys,re
 
 def parse_cycles(lines):
 	cycles=[]
+	total_get=[]
+	total_put=[]
 	for each in lines:
 		each=each.rstrip('\n')
+		if(len(each)<1):
+			continue
+		if(each[0]!='P' and each[0]!='C'):
+			continue
 		m=re.search(r'(Tc:)([0-9]+)',each)
+		g=re.search(r'(gt:)([0-9]+)',each)
+		p=re.search(r'(pt:)([0-9]+)',each)
 		if(m):
 			cycles.append(int(m.group(2)))
-	print str(float(sum(cycles))/float(1000000000))[:6]
+		if(g):
+			total_get.append(0)
+			total_get.append(int(g.group(2)))		
+		if(p):
+			total_get.append(0)
+			total_put.append(int(p.group(2)))
+		
+	#print str(float(sum(cycles))/float(1000000000))[:6]
+	ops=float(sum(total_put)+sum(total_get))
+	if(ops == 0):
+		print 0
+	else:
+		print str(int(float(sum(cycles))/ops))
 
 def main():
 	if(len(sys.argv)<2):

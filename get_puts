@@ -6,7 +6,7 @@ def parse_cycles(lines):
 	ephgets=[]
 	for each in lines:
 		each=each.rstrip('\n')
-		m=re.search(r'(Ge:)([0-9]+)',each)
+		m=re.search(r'(Ep:)([0-9]+)',each)
 		if(m):
 			ephgets.append(int(m.group(2)))
 	print (sum(ephgets))

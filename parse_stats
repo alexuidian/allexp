@@ -3,7 +3,7 @@
 import sys
 
 force=1
-rangess=1500
+rangess=175
 
 def findranges(lines,max1):
 	i=len(lines)-1
@@ -46,7 +46,7 @@ def main():
 	count=0
 	above=0
 	countz=0
-	rangez=200
+	rangez=10
 	zlist=[]
 	oldv=0
 	for each in lines:

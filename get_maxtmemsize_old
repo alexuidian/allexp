@@ -12,7 +12,6 @@ if [[ ! -f `echo $1 | sed 's/tmem/G/'` ]];then
 fi
 
 cat `echo $1 | sed 's/tmem/G/'` | tr -s " " | tail -n 1 | cut -d" " -f12 | sed 's/\(.*\)/\1 * 4096 \/1024\/1024/' | bc
-#cat `echo $1 | sed 's/tmem/G/'` | tr -s " " | tail -n 1 | cut -d" " -f12 | bc
 
 
 

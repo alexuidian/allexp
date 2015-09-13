@@ -22,6 +22,16 @@ def collect(lists):
 		all_adecomp=[]
 		all_acompc=[]
 		all_adecompc=[]
+		
+		all_adedup=[]
+		all_afdedup=[]
+		all_adedupc=[]
+		all_afdedupc=[]
+		
+		all_puts=[]
+				
+
+
 		filesize=0
 		setup=-1
 		filesizez=[]
@@ -47,6 +57,12 @@ def collect(lists):
 			adecompc=[]
 			aget=[]
 			aput=[]
+	                adedup=[]
+                	afdedup=[]
+                	adedupc=[]
+                	afdedupc=[]	
+			puts=[]
+		
 			
 			for z in all_setupf:
 				setup+=1
@@ -60,6 +76,8 @@ def collect(lists):
 				dedupfacter.append(output)
 				(status,output)=commands.getstatusoutput('./get_gets '+z+'/stats_tmem')
 				gets.append(output)
+				(status,output)=commands.getstatusoutput('./get_puts '+z+'/stats_tmem')
+				puts.append(output)
 				(status,output)=commands.getstatusoutput('./get_tzefacter '+z+'/stats_tmem')
 				tze.append(output)
 				(status,output)=commands.getstatusoutput('./get_maxtmemsize '+z+'/stats_tmem')
@@ -81,6 +99,19 @@ def collect(lists):
 				acompc.append(output)
 				(status,output)=commands.getstatusoutput('./get_adecompc '+z+'/stats_tmem')
 				adecompc.append(output)
+
+				(status,output)=commands.getstatusoutput('./get_adedup '+z+'/stats_tmem')
+				adedup.append(output)
+				(status,output)=commands.getstatusoutput('./get_afdedup '+z+'/stats_tmem')
+				afdedup.append(output)
+				(status,output)=commands.getstatusoutput('./get_adedupc '+z+'/stats_tmem')
+				adedupc.append(output)
+				(status,output)=commands.getstatusoutput('./get_afdedupc '+z+'/stats_tmem')
+				afdedupc.append(output)
+				
+				file3="stats_put_list"+str(setup)+str(filesize)
+				(status,output)=commands.getstatusoutput('./parse_puts '+z+'/stats_tmem >'+file3)
+					
 				
 				(status,output)=commands.getstatusoutput('ls '+z+'/stats_list_*')
 				output=sorted(output.split())
@@ -129,9 +160,12 @@ def collect(lists):
 			all_acompc.append(acompc)
 			all_adecompc.append(adecompc)
 			
+			all_adedup.append(adedup)
+                	all_afdedup.append(afdedup)
+                	all_adedupc.append(adedupc)
+                	all_afdedupc.append(afdedupc)
+			all_puts.append(puts)
 
-		
-				
 
 			
 		for i in range(0,len(all_perf)):
@@ -162,6 +196,12 @@ def collect(lists):
 		f14=open("stats_adecomp",'w')
 		f15=open("stats_acompc",'w')
 		f16=open("stats_adecompc",'w')
+
+		f17=open("stats_adedup",'w')
+		f18=open("stats_afdedup",'w')
+		f19=open("stats_adedupc",'w')
+		f20=open("stats_afdedupc",'w')
+		f21=open("stats_puts",'w')
 	
 		for i in range(0,len(all_perf)):
 			for j in range(0,len(all_perf[1])):
@@ -179,6 +219,12 @@ def collect(lists):
 				f14.write(all_adecomp[i][j]+' ')
 				f15.write(all_acompc[i][j]+' ')
 				f16.write(all_adecompc[i][j]+' ')
+				f17.write(all_adedup[i][j]+' ')
+				f18.write(all_afdedup[i][j]+' ')
+				f19.write(all_adedupc[i][j]+' ')
+				f20.write(all_afdedupc[i][j]+' ')
+				f21.write(all_puts[i][j]+' ')
+				
 			
 				f6.write(all_compfacter[i][j]+' ')
 			f1.write('\n')
@@ -196,6 +242,11 @@ def collect(lists):
 			f14.write('\n')
 			f15.write('\n')
 			f16.write('\n')
+			f17.write('\n')
+			f18.write('\n')
+			f19.write('\n')
+			f20.write('\n')
+			f21.write('\n')
 			
 			f7.write(filesizez[i]+'\n')
 			
@@ -215,12 +266,18 @@ def collect(lists):
 		f14.close()
 		f15.close()
 		f16.close()
+		f17.close()
+		f18.close()
+		f19.close()
+		f20.close()
+		f21.close()
 			
 			
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_perf > stats_perf1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_cycle > stats_cycle1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_dedup > stats_dedup1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_gets > stats_gets1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_puts > stats_puts1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_tze > stats_tze1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_comp > stats_comp1')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_maxt > stats_maxt1 ')
@@ -232,8 +289,12 @@ def collect(lists):
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adecomp > stats_adecomp1  ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_acompc > stats_acompc1  ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adecompc > stats_adecompc1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adedup > stats_adedup1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_afdedup > stats_afdedup1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_adedupc > stats_adedupc1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_afdedup > stats_afdedupc1 ')
 		
-		l=['stats_perf1','stats_cycle1','stats_dedup1','stats_gets1','stats_tze1','stats_comp1','stats_maxt1','stats_aget1','stats_aput1','stats_acomp1','stats_adecomp1','stats_acompc1','stats_adecompc1']
+		l=['stats_perf1','stats_cycle1','stats_dedup1','stats_gets1','stats_puts1','stats_tze1','stats_comp1','stats_maxt1','stats_aget1','stats_aput1','stats_acomp1','stats_adecomp1','stats_acompc1','stats_adecompc1','stats_adedup1','stats_afdedup1','stats_afdedupc1','stats_adedupc1']
 		for li in l:
 			commandplot='./plot2.sh  '+li+' '+li+'.eps  '	
 			#commandplot='./plot2.sh  '+li+' '+li+'.eps && rm '+li	

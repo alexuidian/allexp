@@ -26,11 +26,12 @@ t6="TZ"
 t7="TDZ"
 
 side="right"
+side="left"
 t1="Tmem"
-t2="comp0"
-t3="comp10"
-t4="comp45"
-t5="comp90"
+t2="dup0"
+t3="dup15"
+t4="dup90"
+t5="dup90"
 
 
 
@@ -75,9 +76,9 @@ plot newhistogram "Filesize ->",\
 ,\
 "''"  using 5 ti "'$t4'" fs pattern 7 lc 7 lw 1.2, \
 "''" u 0:5:5 w labels font "',6'"  right offset first xoffset1+0.48 ,graph yoffset rotate by 45 notitle \
-,\
-"''" using 6 ti "'$t5'" fs pattern 2 lc 18 lw 1.2, \
-"''" u 0:6:6 w labels font "',6'"  right offset first xoffset1+0.64 ,graph yoffset rotate by 45 notitle \
+#,\
+#"''" using 6 ti "'$t5'" fs pattern 2 lc 18 lw 1.2, \
+#"''" u 0:6:6 w labels font "',6'"  right offset first xoffset1+0.64 ,graph yoffset rotate by 45 notitle \
 #,\
 #"''"  using 7 ti "'$t6'" fs pattern 21  lc 7 lw 1.2, \
 #"''" u 0:7:7 w labels font "',6'"  right offset first xoffset1+.80 ,graph yoffset rotate by 45 notitle \

@@ -3,13 +3,13 @@
 import sys,re
 
 def parse_cycles(lines):
-	ephgets=[]
+	cycles=[]
 	for each in lines:
 		each=each.rstrip('\n')
-		m=re.search(r'(Ge:)([0-9]+)',each)
+		m=re.search(r'(Tc:)([0-9]+)',each)
 		if(m):
-			ephgets.append(int(m.group(2)))
-	print (sum(ephgets))
+			cycles.append(int(m.group(2)))
+	print str(float(sum(cycles))/float(1000000000))[:6]
 
 def main():
 	if(len(sys.argv)<2):
@@ -18,9 +18,14 @@ def main():
 	lines=[]
 	for each in sys.argv[1:]:
 		f=open(each)
+		if(not f):
+			print 0
+			return
 		lines=lines + f.readlines()
 	parse_cycles(lines)
 	
+
+
 
 main()
 

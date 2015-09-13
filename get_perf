@@ -10,11 +10,13 @@ def parse_myperf(lines):
 		each=each.rstrip('\n')
 		if ( lc == 1):
 			lc=0
-			perf.append(float(each.split()[2]))
-			count+=1
+			first=float(each.split()[1])
+			if(first != 0.0):
+				perf.append(float(each.split()[2]))
+				count+=1
 		if ( each[0:2] == "#s"):
 			lc=1
-	print sum(perf)/count
+	print int(sum(perf)/count)
 
 def parse_filebench(lines):
 	perf=[]

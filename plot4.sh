@@ -17,6 +17,8 @@ if [ $2 ];then
 	ofile=$2
 fi
 
+
+#setups=`echo tmem dup0 dup15 dup90`
 setups=`echo tmem dup0 dup15 dup90`
 
 tit=`echo $ifile | sed 's/_/-/g'`
@@ -37,8 +39,8 @@ set logscale y 10
 #set logscale x 2
 #set style rect fc lt -1 fs solid 0.15 noborder
 
-set xlabel "CPU CYCLES * 100"
-set ylabel "CDF "
+set xlabel "Time"
+set ylabel "No. of Puts"
 set key on right bottom
 set key font "',8'"
 set key spacing "'0.4'"
@@ -54,7 +56,12 @@ do
 	j=0
 	for jj in $setups
 	do
-		echo "'$ifile$j$i'" using 1:2 title "'$ii$jj'" with lines lw 5 lc $j, '\' >> temp1
+		
+#		tail -n+3 "$ifile$j$i" > "$ifile$j$i"_1
+
+#		mv "$ifile$j$i"_1 "$ifile$j$i"
+		color=`echo $j + 1 | bc`	
+		echo "'$ifile$j$i'" using 1 title "'$ii$jj'" with lines lw 5 lc $color, '\' >> temp1
 		
 	
 	echo  $i $j
@@ -63,7 +70,7 @@ do
 	let ++i
 done
 
-echo "'' with lines lw 0" >> temp1
+echo "'' u 1 pt 7 ps 0" >> temp1
 
 
 gnuplot temp1
