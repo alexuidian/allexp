@@ -30,6 +30,7 @@ def parse_cycles(lines):
 		print 0
 	else:
 		print str(int(float(sum(cycles))/ops))
+		#print str(int(float(sum(cycles))))
 
 def main():
 	if(len(sys.argv)<2):

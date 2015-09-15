@@ -43,8 +43,8 @@ def main():
 	for each in sys.argv[1:]:
 		f=open(each)
 		lines=lines + f.readlines()
-	parse_myperf(lines)
-	#parse_filebench(lines)
+	#parse_myperf(lines)
+	parse_filebench(lines)
 main()
 
 

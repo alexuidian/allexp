@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [[ ! $1 ]];then
+	echo "Give stats_G file"
+	exit -1
+fi
+
+if [[ ! -f `echo $1 | sed 's/tmem/G/'` ]];then
+	echo 0
+	exit -1
+
+fi
+
+file=`echo $1 | sed 's/tmem/G/'`
+up=`cat $file | tr -s " " | tail -n 1 | cut -d" " -f17`
+down=`cat $file | tr -s " " | tail -n 1 | cut -d" " -f33`
+
+#echo $down
+
+if [[ $down == '0' ]];then
+
+        echo 0
+
+else
+
+        python -c "print int("$down")" 
+
+
+fi
+
+
+
+
+#echo `cat $file | tr -s " " | tail -n 1 | cut -d" " -f17` / `cat $file | tr -s " " | tail -n 1 | cut -d" " -f3` | bc
+
+
+
+
+

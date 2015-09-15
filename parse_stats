@@ -3,7 +3,7 @@
 import sys
 
 force=1
-rangess=175
+rangess=1500
 
 def findranges(lines,max1):
 	i=len(lines)-1

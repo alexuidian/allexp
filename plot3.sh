@@ -17,7 +17,7 @@ if [ $2 ];then
 	ofile=$2
 fi
 
-setups=`echo tmem dup0 dup15 dup90`
+setups=`echo Tmem Com0Dup0 Com10Dup90 Com90Dup10 Com45Dup15`
 
 tit=`echo $ifile | sed 's/_/-/g'`
 tit=`echo $tit | sed 's/stats-list-/cpu-cycles-/'`
@@ -54,7 +54,7 @@ do
 	j=0
 	for jj in $setups
 	do
-		echo "'$ifile$j$i'" using 1:2 title "'$ii$jj'" with lines lw 5 lc $j, '\' >> temp1
+		echo "'$ifile$j$i'" using 1:2 title "'$ii,$jj'" with lines lw 5 lc $j, '\' >> temp1
 		
 	
 	echo  $i $j

@@ -1,10 +1,10 @@
 
 reset
 set terminal postscript enhanced eps color blacktext solid "Helvetica" 24
-set output "stats_list_comp3.eps"
+set output "wstepc1.eps"
 
 set grid
-set title "stats-list-comp"
+set title "cpu-cycles-put"
 set mxtics 3
 #set grid xtics 
 #set grid mxtics 
@@ -13,17 +13,17 @@ set logscale y 10
 #set logscale x 2
 #set style rect fc lt -1 fs solid 0.15 noborder
 
-set xlabel "CPU CYCLES"
-set ylabel "Frequency"
+set xlabel "CPU CYCLES * 100"
+set ylabel "CDF "
 set key on right bottom
 set key font ",8"
 set key spacing "0.4"
 
 
 plot \
-'stats_list_comp03' using 2 title '644.24tmem' with lines lw 5 lc 0, \
-'stats_list_comp13' using 2 title '644.24comp0' with lines lw 5 lc 1, \
-'stats_list_comp23' using 2 title '644.24comp10' with lines lw 5 lc 2, \
-'stats_list_comp33' using 2 title '644.24comp45' with lines lw 5 lc 3, \
-'stats_list_comp43' using 2 title '644.24comp90' with lines lw 5 lc 4, \
+'stats_list_put01' using 1:2 title '912.605,Tmem' with lines lw 5 lc 0, \
+'stats_list_put11' using 1:2 title '912.605,Com0Dup0' with lines lw 5 lc 1, \
+'stats_list_put21' using 1:2 title '912.605,Com10Dup90' with lines lw 5 lc 2, \
+'stats_list_put31' using 1:2 title '912.605,Com90Dup10' with lines lw 5 lc 3, \
+'stats_list_put41' using 1:2 title '912.605,Com45Dup15' with lines lw 5 lc 4, \
 '' with lines lw 0

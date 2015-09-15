@@ -17,9 +17,8 @@ if [ $2 ];then
 	ofile=$2
 fi
 
-
+setups=`echo tmem Com0Dup0 Com10Dup90 Com90Dup10  Com45Dup15`
 #setups=`echo tmem dup0 dup15 dup90`
-setups=`echo tmem dup0 dup15 dup90`
 
 tit=`echo $ifile | sed 's/_/-/g'`
 tit=`echo $tit | sed 's/stats-list-/cpu-cycles-/'`
