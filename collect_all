@@ -9,6 +9,7 @@ def collect(lists):
 		all_ff=sorted(map(lambda x: os.path.abspath(os.path.join(each,x)), all_f))
 		all_perf=[]
 		all_cycles=[]
+		all_cycles_old=[]
 		all_compfacter=[]
 		all_dedupfacter=[]
 		all_gets=[]
@@ -46,6 +47,7 @@ def collect(lists):
 			all_setupf=sorted(map(lambda x: os.path.abspath(os.path.join(y,x)), all_setup))
 			perf=[]
 			cycles=[]
+			cycles_old=[]
 			compfacter=[]
 			dedupfacter=[]
 			gets=[]
@@ -75,6 +77,8 @@ def collect(lists):
 				perf.append(output)
 				(status,output)=commands.getstatusoutput('./get_cycles '+z+'/stats_tmem')
 				cycles.append(output)
+				(status,output)=commands.getstatusoutput('./get_cycles_old '+z+'/stats_tmem')
+				cycles_old.append(output)
 				(status,output)=commands.getstatusoutput('./get_compfacter '+z+'/stats_tmem')
 				compfacter.append(output)
 				(status,output)=commands.getstatusoutput('./get_dedupfacter '+z+'/stats_tmem')
@@ -155,6 +159,7 @@ def collect(lists):
 					
 			all_perf.append(perf)
 			all_cycles.append(cycles)
+			all_cycles_old.append(cycles_old)
 			all_compfacter.append(compfacter)
 			all_dedupfacter.append(dedupfacter)
 			all_gets.append(gets)
@@ -215,6 +220,7 @@ def collect(lists):
 		f21=open("stats_puts",'w')
 		f22=open("stats_dfact",'w')
 		f23=open("stats_acopy",'w')
+		f24=open("stats_cycle_old",'w')
 		
 	
 		for i in range(0,len(all_perf)):
@@ -240,6 +246,7 @@ def collect(lists):
 				f21.write(all_puts[i][j]+' ')
 				f22.write(all_dfact[i][j]+' ')
 				f23.write(all_acopy[i][j]+' ')
+				f24.write(all_cycles_old[i][j]+' ')
 				
 				
 			
@@ -266,6 +273,7 @@ def collect(lists):
 			f21.write('\n')
 			f22.write('\n')
 			f23.write('\n')
+			f24.write('\n')
 			
 			f7.write(filesizez[i]+'\n')
 			
@@ -292,10 +300,12 @@ def collect(lists):
 		f21.close()
 		f22.close()
 		f23.close()
+		f24.close()
 			
 			
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_perf > stats_perf1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_cycle > stats_cycle1 ')
+		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_cycle_old > stats_cycle_old1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_dedup > stats_dedup1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_gets > stats_gets1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_puts > stats_puts1 ')
@@ -317,7 +327,7 @@ def collect(lists):
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_dfact > stats_dfact1 ')
 		(status,output1)=commands.getstatusoutput('paste -d" " filesizez stats_acopy > stats_acopy1 ')
 		
-		l=['stats_perf1','stats_cycle1','stats_dedup1','stats_gets1','stats_puts1','stats_tze1','stats_comp1','stats_maxt1','stats_aget1','stats_aput1','stats_acomp1','stats_adecomp1','stats_acompc1','stats_adecompc1','stats_adedup1','stats_afdedup1','stats_afdedupc1','stats_adedupc1','stats_dfact1','stats_acopy1']
+		l=['stats_perf1','stats_cycle1','stats_cycle_old1','stats_dedup1','stats_gets1','stats_puts1','stats_tze1','stats_comp1','stats_maxt1','stats_aget1','stats_aput1','stats_acomp1','stats_adecomp1','stats_acompc1','stats_adecompc1','stats_adedup1','stats_afdedup1','stats_afdedupc1','stats_adedupc1','stats_dfact1','stats_acopy1']
 		for li in l:
 			commandplot='./plot2.sh  '+li+' '+li+'.eps  '	
 			#commandplot='./plot2.sh  '+li+' '+li+'.eps && rm '+li	

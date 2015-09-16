@@ -15,7 +15,7 @@ if [ $3 ];then
 	ylabel="$3"
 fi
 
-logy="set logscale y"
+#logy="set logscale y"
 
 t1="N"
 t2="T"
@@ -33,6 +33,18 @@ t3="Com10Dup90"
 t4="Com90Dup10"
 t5="Com45Dup15"
 
+#t1="N"
+#t2="T"
+
+t1="comp"
+t2="dedup"
+t3="comp+dedup"
+
+#t1="Tmem"
+#t2="Dup15"
+#t3="Dup90"
+#t4="Com90"
+#t5="Com90"
 
 
 
@@ -65,7 +77,7 @@ set key samplen 1
 #set key outside
 #set key width -12
 item=5
-xoffset1=-0.32
+xoffset1=-0.12
 yoffset=0.05
 #set key at 2,3.5,2
 
@@ -78,12 +90,12 @@ plot newhistogram "Filesize ->",\
 ,\
 "''" using 4 ti "'$t3'" fs  pattern 3 lc 18 lw 1.2, \
 "''" u 0:4:4 w labels font "',6'"  right offset first xoffset1+0.32 ,graph yoffset rotate by 45 notitle \
-,\
-"''"  using 5 ti "'$t4'" fs pattern 7 lc 7 lw 1.2, \
-"''" u 0:5:5 w labels font "',6'"  right offset first xoffset1+0.48 ,graph yoffset rotate by 45 notitle \
-,\
-"''" using 6 ti "'$t5'" fs pattern 2 lc 18 lw 1.2, \
-"''" u 0:6:6 w labels font "',6'"  right offset first xoffset1+0.64 ,graph yoffset rotate by 45 notitle \
+#,\
+#"''"  using 5 ti "'$t4'" fs pattern 7 lc 7 lw 1.2, \
+#"''" u 0:5:5 w labels font "',6'"  right offset first xoffset1+0.48 ,graph yoffset rotate by 45 notitle \
+#,\
+#"''" using 6 ti "'$t5'" fs pattern 2 lc 18 lw 1.2, \
+#"''" u 0:6:6 w labels font "',6'"  right offset first xoffset1+0.64 ,graph yoffset rotate by 45 notitle \
 #,\
 #"''"  using 7 ti "'$t6'" fs pattern 21  lc 7 lw 1.2, \
 #"''" u 0:7:7 w labels font "',6'"  right offset first xoffset1+.80 ,graph yoffset rotate by 45 notitle \

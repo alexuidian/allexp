@@ -9,7 +9,7 @@ def parse_cycles(lines):
 		m=re.search(r'(Tc:)([0-9]+)',each)
 		if(m):
 			cycles.append(int(m.group(2)))
-	print str(float(sum(cycles))/float(1000000000))[:6]
+	print str(float(sum(cycles))/float(1000000000))[:7]
 
 def main():
 	if(len(sys.argv)<2):
